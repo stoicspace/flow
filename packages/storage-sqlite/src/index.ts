@@ -1,0 +1,1 @@
+export { SQLiteStorageAdapter } from "./adapter";

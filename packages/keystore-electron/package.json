@@ -1,0 +1,17 @@
+{
+  "name": "@flowlens/keystore-electron",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@flowlens/core": "*",
+    "keytar": "^7.9.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
