@@ -135,7 +135,7 @@ export default function Sidebar() {
         </nav>
         <div className="px-2 pb-3">
           <Link
-            href="/workflows"
+            href="/import"
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90"
           >
             <Plus size={20} strokeWidth={2.5} />

@@ -66,7 +66,7 @@ export default function Card({
 }: CardProps) {
     if (variant === "create") {
         return (
-            <Link href={href || "/workflows"}>
+            <Link href={href || "/import"}>
                 <div className="m-5 flex flex-col items-center justify-center rounded-lg border border-dashed border-border bg-transparent cursor-pointer hover:bg-surface-2 transition-colors min-h-[200px]">
                     <div className="flex flex-col items-center gap-3 text-inactive">
                         <span className="text-4xl font-light leading-none">⊕</span>
