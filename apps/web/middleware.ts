@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
   const isLandingPage = path === "/";
 
 
-  const publicPaths = ["/", "/login", "/signup", "/pricing"]; // add as needed
+  const publicPaths = ["/", "/login", "/signup", "/pricing", "/demo"]; // add as needed
   const isPublicPath = publicPaths.includes(path);
   const isAuthPage = path === "/login" || path === "/signup";
 

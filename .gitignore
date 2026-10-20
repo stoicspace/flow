@@ -1,3 +1,32 @@
-node_modules/*
-apps.zip
-apps (2).zip
+# dependencies
+node_modules/
+
+# build outputs
+dist/
+out/
+release/
+.next*/
+coverage/
+*.tsbuildinfo
+
+# archives
+*.zip
+
+# env files
+.env*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# os / editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp

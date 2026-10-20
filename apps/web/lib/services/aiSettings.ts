@@ -178,7 +178,7 @@ export async function getTeamAIProvider(db: DbLike, teamId: string): Promise<AIP
     // The previous hardcoded model (google/gemma-4-26b-a4b-it:free) was
     // broken — this is the fix called out in todo.md's "Immediate Next
     // Actions" #1, folded in here since it's the same code path.
-    model: process.env.FLOWLENS_AI_MODEL || "google/gemini-2.0-flash-001",
+    model: process.env.FLOWLENS_AI_MODEL || "nvidia/nemotron-3-ultra-550b-a55b:free",
     apiKey: process.env.OPENROUTER_API_KEY || "",
   });
 }
