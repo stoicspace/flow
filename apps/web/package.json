@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build:deps && next build",
+    "build:deps": "cd ../.. && npm run build --workspace=packages/core && npm run build --workspace=packages/storage-supabase",
     "start": "next start",
     "lint": "eslint"
   },
