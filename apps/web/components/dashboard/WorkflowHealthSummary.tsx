@@ -59,7 +59,7 @@ export default function WorkflowHealthSummary({ workflows, incidentCount, loadin
       )}
       {!loading && incidentCount > 0 && (
         <p className="text-xs text-status-error mt-3">
-          {incidentCount} open incident{incidentCount > 1 ? "s" : ""} — see Investigate.
+          {incidentCount} open incident{incidentCount > 1 ? "s" : ""}, see Investigate.
         </p>
       )}
     </div>

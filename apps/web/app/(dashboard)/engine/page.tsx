@@ -130,7 +130,7 @@ export default function AIEngineStatusPage() {
         <div className="grid grid-cols-2 gap-6 mb-10">
           <div>
             <p className="text-[11px] font-semibold text-text-muted uppercase tracking-wide mb-2">Success Rate</p>
-            <p className="text-5xl font-bold text-text-primary mb-1">{loading ? "—" : `${successRate}%`}</p>
+            <p className="text-5xl font-bold text-text-primary mb-1">{loading ? "–" : `${successRate}%`}</p>
             {!loading && (
               delta === null ? (
                 <p className="text-xs text-text-muted flex items-center gap-1">Not enough data for yesterday yet</p>
@@ -145,7 +145,7 @@ export default function AIEngineStatusPage() {
           </div>
           <div>
             <p className="text-[11px] font-semibold text-text-muted uppercase tracking-wide mb-2">Active Nodes</p>
-            <p className="text-5xl font-bold text-text-primary mb-1">{loading ? "—" : totalNodes.toLocaleString()}</p>
+            <p className="text-5xl font-bold text-text-primary mb-1">{loading ? "–" : totalNodes.toLocaleString()}</p>
             <p className="text-xs text-text-muted flex items-center gap-1">⬡ Latest snapshot, across all workflows</p>
           </div>
         </div>

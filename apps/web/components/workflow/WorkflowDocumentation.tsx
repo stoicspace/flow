@@ -87,7 +87,7 @@ export default function WorkflowDocumentation({
                 {nodeDocs.map(n => (
                   <div key={n.node_id} className="flex gap-2 text-[11px]">
                     <span className="text-text-primary font-medium">{n.label}</span>
-                    <span className="text-text-muted">— {n.purpose}</span>
+                    <span className="text-text-muted">· {n.purpose}</span>
                   </div>
                 ))}
               </div>

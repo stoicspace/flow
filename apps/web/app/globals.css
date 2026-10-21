@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* The /demo page lives in gitignored folders (apps/web/.gitignore lines 48-49),
+   so Tailwind's automatic source detection skips them — register them explicitly.
+   Paths are relative to this stylesheet (app/globals.css). */
+@source "./(landing)/demo";
+@source "../components/demo";
+
 :root {
   --color-surface: #F8F7F4;
   --color-surface-2: #FFFFFF;
@@ -64,7 +70,38 @@
 
   /* Text */
   --color-text-primary: #F3F2EE;
+  --color-text-secondary: #4A4A50;
   --color-text-muted: #BBB7AE;
+
+  /* Landing (/demo) tokens — values overridden per-theme in
+     app/(landing)/demo/demo.css; defaults here only enable utility
+     generation. The dashboard never uses these class names. */
+  --color-surface-4: #18110E;
+  --color-chip: #2A1810;
+  --color-accent: #C8684A;
+  --color-accent-text: #F0A386;
+  --color-accent-soft: #E08A6B;
+  --color-accent-pale: #F2B49C;
+  --color-border-strong: #352E2B;
+  --color-border-warm: #4A2A1E;
+  --color-success: #12B76A;
+  --color-success-bg: #0F2A1F;
+  --color-success-text: #5FD39A;
+  --color-error: #D92D20;
+  --color-error-bg: #2A1210;
+  --color-error-text: #FDA29B;
+  --color-warn-bg: #2A1F12;
+  --color-warn-text: #E5A96F;
+  --color-btn-primary-bg: #F5F2F0;
+  --color-btn-primary-text: #0E0E10;
+  --color-island: #0E0E10;
+  --color-island-soft: #2A1810;
+  --color-island-border: #2B2724;
+  --color-island-text: #FFFFFF;
+  --color-island-muted: #CFCBC8;
+  --color-island-dim: #8E8A87;
+  --color-island-accent: #F2B49C;
+  --color-island-error: #FDA29B;
 
   /* Fonts */
   --font-sans: "Inter", system-ui, sans-serif;

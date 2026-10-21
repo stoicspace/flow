@@ -185,7 +185,7 @@ Respond ONLY with valid JSON matching this schema exactly. No markdown. No expla
     affected_nodes: [],
     suggested_fix: null,
     problem: "Unable to automatically determine the problem.",
-    business_impact: "Unknown — manual investigation required.",
+    business_impact: "Unknown: manual investigation required.",
     what_changed: "Unknown.",
     execution_evidence: errorMessage || "No execution error message was provided.",
     recovery_steps: ["Investigate manually using the diff and execution logs."],
@@ -387,7 +387,7 @@ Respond ONLY with valid JSON matching this schema exactly. No markdown. JSON onl
     score: 0,
     status: "needs_review",
     blocking_issues: [],
-    warnings: ["AI deployment check is unavailable right now — review manually."],
+    warnings: ["AI deployment check is unavailable right now: review manually."],
   });
 }
 
@@ -417,7 +417,7 @@ Respond with plain text only. No markdown, no JSON.`;
     return text.trim() || "AI explanation unavailable.";
   } catch (e) {
     console.error("explainChange failed:", e);
-    return "AI explanation is unavailable right now — see the raw diff below.";
+    return "AI explanation is unavailable right now: see the raw diff below.";
   }
 }
 
@@ -467,7 +467,7 @@ Respond ONLY with valid JSON matching this schema exactly. No markdown. No expla
 
   return callJSON<RepairSuggestion>(provider, prompt, 1200, {
     diagnosis: "Unable to automatically diagnose this workflow right now.",
-    reason: "AI repair is unavailable — try again shortly or investigate manually.",
+    reason: "AI repair is unavailable: try again shortly or investigate manually.",
     operations: [],
   });
 }
@@ -569,7 +569,7 @@ ${context || "No workflow context provided."}`,
       } catch (e) {
         console.error("createChatStream failed mid-stream:", e);
         controller.enqueue(
-          encoder.encode(`data: ${JSON.stringify({ text: "\n\n[AI stream interrupted — try again.]" })}\n\n`)
+          encoder.encode(`data: ${JSON.stringify({ text: "\n\n[AI stream interrupted: try again.]" })}\n\n`)
         );
       } finally {
         controller.enqueue(encoder.encode("data: [DONE]\n\n"));

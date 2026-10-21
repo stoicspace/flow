@@ -130,7 +130,7 @@ function ComparePage() {
       // test) instead of just flipping incident status with no actual change.
       const context = [analysis?.root_cause, analysis?.impact_summary]
         .filter(Boolean)
-        .join(" — ");
+        .join(" · ");
 
       const proposeRes = await fetch(`/api/workflows/${workflowId}/fix`, {
         method: "POST",
@@ -170,7 +170,7 @@ function ComparePage() {
         setTimeout(() => router.push(`/workflows/${workflowId}`), 1500);
       } else {
         setFixMessage(
-          "Fix applied but didn't fully verify — open the workflow's Fix Workflow panel to review and retry."
+          "Fix applied but didn't fully verify: open the workflow's Fix Workflow panel to review and retry."
         );
       }
     } catch (e: unknown) {

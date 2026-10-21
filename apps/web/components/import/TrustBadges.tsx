@@ -39,7 +39,7 @@ export default function TrustBadges() {
   // disclosure — what gets sent, where, and under which privacy mode.
   const location = settings ? locationLabel[settings.processing_location] : "cloud";
   const privacyLine = settings?.workflow_data_processing === false
-    ? "AI analysis is off for this team — workflow data is not sent anywhere for AI processing."
+    ? "AI analysis is off for this team: workflow data is not sent anywhere for AI processing."
     : `Node names and structure are sent to FlowLens Copilot (${location}) for AI analysis in ${settings?.privacy_mode || "standard"} privacy mode. Credentials are never included.`;
 
   return (

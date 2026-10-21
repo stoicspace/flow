@@ -155,7 +155,7 @@ export default function SettingsPage() {
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not save — check your endpoint, shape, and key.");
+      if (!res.ok) throw new Error(data.error || "Could not save: check your endpoint, shape, and key.");
       setAiSettings(data.settings);
       setProviderForm(prev => ({ ...prev, apiKey: "" })); // never keep plaintext in state after save
       setProviderSaved(true);
@@ -238,7 +238,7 @@ export default function SettingsPage() {
             </button>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-text-primary">{profile?.name || "—"}</h2>
+            <h2 className="text-xl font-bold text-text-primary">{profile?.name || "–"}</h2>
             <div className="flex items-center gap-2 mt-1.5">
               <span className="flex items-center gap-1 text-xs bg-surface border border-border rounded-full px-2.5 py-1 text-text-muted">
                 <Shield size={11} /> System Admin
@@ -399,7 +399,7 @@ export default function SettingsPage() {
                 <div className="space-y-2">
                   {[
                     { id: "cloud" as const, label: "Cloud Processing", available: true, desc: "Analyzed via FlowLens's cloud AI service. Fastest, no setup required." },
-                    { id: "self_hosted" as const, label: "Self-Hosted / BYOK", available: true, desc: "Bring your own endpoint, model, and API key — nothing goes through FlowLens's own AI service." },
+                    { id: "self_hosted" as const, label: "Self-Hosted / BYOK", available: true, desc: "Bring your own endpoint, model, and API key, nothing goes through FlowLens's own AI service." },
                     { id: "local" as const, label: "Local Processing", available: false, desc: "Fully on-device inference, no network calls at all. Planned." },
                   ].map(opt => (
                     <button
@@ -483,7 +483,7 @@ export default function SettingsPage() {
 
                     <div>
                       <label className="text-xs text-text-muted mb-1 block">
-                        API Key {aiSettings.has_api_key && <span className="text-status-success">— {aiSettings.api_key_hint || "configured"}</span>}
+                        API Key {aiSettings.has_api_key && <span className="text-status-success">· {aiSettings.api_key_hint || "configured"}</span>}
                       </label>
                       <input
                         type="password"

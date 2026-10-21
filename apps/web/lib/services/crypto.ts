@@ -24,7 +24,7 @@ function getKey(): Buffer {
   const raw = process.env.FLOWLENS_ENCRYPTION_KEY;
   if (!raw) {
     throw new Error(
-      "FLOWLENS_ENCRYPTION_KEY is not set — required to store platform API keys securely."
+      "FLOWLENS_ENCRYPTION_KEY is not set (required to store platform API keys securely)."
     );
   }
   const key = Buffer.from(raw, "base64");
@@ -64,6 +64,6 @@ export function decrypt(stored: string): string {
     return Buffer.concat([decipher.update(ciphertext), decipher.final()]).toString("utf8");
   } catch (e) {
     console.error("Decrypting stored secret failed:", e);
-    throw new Error("Could not decrypt stored credential — it may have been encrypted with a different key.");
+    throw new Error("Could not decrypt stored credential: it may have been encrypted with a different key.");
   }
 }

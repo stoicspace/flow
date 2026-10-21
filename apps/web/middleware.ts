@@ -27,8 +27,9 @@ export async function middleware(request: NextRequest) {
   const isLandingPage = path === "/";
 
 
-  const publicPaths = ["/", "/login", "/signup", "/pricing", "/demo"]; // add as needed
-  const isPublicPath = publicPaths.includes(path);
+  const publicPaths = ["/", "/login", "/signup", "/pricing", "/demo", "/about", "/integrations", "/contact"]; // add as needed
+  const isPublicPath =
+    publicPaths.includes(path) || path === "/docs" || path.startsWith("/docs/");
   const isAuthPage = path === "/login" || path === "/signup";
 
   if (!user && !isPublicPath) {

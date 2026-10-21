@@ -66,7 +66,7 @@ export async function POST(
   const latestSnapshot = await storage.getLatestSnapshot(teamId, workflowId);
   if (!latestSnapshot?.normalised) {
     return NextResponse.json(
-      { error: "No snapshot found for this workflow yet — import it first." },
+      { error: "No snapshot found for this workflow yet, import it first." },
       { status: 400 }
     );
   }

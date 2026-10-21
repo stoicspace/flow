@@ -252,7 +252,7 @@ export default function NotificationsPage() {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-xl font-bold text-text-primary">
-                {stats?.uptime !== null && stats?.uptime !== undefined ? `${stats.uptime}%` : "—"}
+                {stats?.uptime !== null && stats?.uptime !== undefined ? `${stats.uptime}%` : "–"}
               </span>
               <span className="text-[8px] text-text-muted uppercase tracking-wide">SUCCESS RATE</span>
             </div>
@@ -265,12 +265,12 @@ export default function NotificationsPage() {
           <div className="grid grid-cols-2 gap-2">
             <div className="bg-surface-2 border border-border rounded-lg px-3 py-3">
               <p className="text-[10px] text-text-muted uppercase">Total Alerts</p>
-              <p className="text-xl font-bold text-text-primary">{stats ? stats.totalAlerts.toLocaleString() : "—"}</p>
+              <p className="text-xl font-bold text-text-primary">{stats ? stats.totalAlerts.toLocaleString() : "–"}</p>
             </div>
             <div className="bg-surface-2 border border-border rounded-lg px-3 py-3">
               <p className="text-[10px] text-text-muted uppercase">Avg Resolve</p>
               <p className="text-xl font-bold text-text-primary">
-                {stats?.avgResolveMinutes != null ? `${stats.avgResolveMinutes}m` : "—"}
+                {stats?.avgResolveMinutes != null ? `${stats.avgResolveMinutes}m` : "–"}
               </p>
             </div>
           </div>

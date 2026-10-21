@@ -81,7 +81,7 @@ const faqs = [
   },
   {
     q: "Does FlowLens change my live n8n/Zapier/Make workflow?",
-    a: "No. Fixes are proposed and applied to a new FlowLens snapshot that you review first — nothing is pushed back to your live platform automatically.",
+    a: "No. Fixes are proposed and applied to a new FlowLens snapshot that you review first, nothing is pushed back to your live platform automatically.",
   },
   {
     q: "Which platforms are supported?",

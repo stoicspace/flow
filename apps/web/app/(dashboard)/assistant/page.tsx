@@ -57,7 +57,7 @@ export default function AIAssistantIndexPage() {
           What can FlowLens Copilot help with today?
         </h1>
         <p className="text-text-muted text-center mb-10 max-w-md">
-          Your AI Workflow Copilot — I understand, review, document, and optimize your
+          Your AI Workflow Copilot: I understand, review, document, and optimize your
           automations, not just debug failures. I've analyzed{" "}
           <span className="text-brand-orange font-semibold">{totalEvents.toLocaleString()} events</span>{" "}
           across your active workflows in the last hour.

@@ -183,7 +183,7 @@ export default function AIAssistantPanel({
 
       const doc = data.documentation;
       const sections = (doc.sections || [])
-        .map((s: any) => `**${s.heading}** — ${s.content}`)
+        .map((s: any) => `**${s.heading}**: ${s.content}`)
         .join("\n");
       const content = `**${doc.title}**\n\n${doc.overview}${sections ? `\n\n${sections}` : ""}`;
       setMessages(prev => [...prev, { role: "assistant", content }]);

@@ -1,19 +1,36 @@
-import Navbar from "@/components/landing/Navbar";
-import Hero from "@/components/landing/Hero";
+import { Inter, Outfit } from "next/font/google";
+import "./demo/demo.css";
+import Navbar from "@/components/demo/Navbar";
+import Hero from "@/components/demo/Hero";
+import ProductMockup from "@/components/demo/ProductMockup";
+import ChangeChips from "@/components/demo/ChangeChips";
+import ValueStatement from "@/components/demo/ValueStatement";
+import Problem from "@/components/demo/Problem";
+import HowItWorks from "@/components/demo/HowItWorks";
+import BringYourOwnKey from "@/components/demo/BringYourOwnKey";
+import Integrations from "@/components/demo/Integrations";
+import FAQ from "@/components/demo/FAQ";
+import CallCTA from "@/components/demo/CallCTA";
+import Footer from "@/components/demo/Footer";
 
-import Footer from "@/components/landing/Footer";
-import Problem from "@/components/landing/Problem";
-import BeforeAfter from "@/components/landing/BeforeAfter";
-import WhyFlowLens from "@/components/landing/WhyFlowLens";
-import CallTA from "@/components/landing/CallTA";
-import Solution from "@/components/landing/Solution";
-import DiscordFeedbackCard from "@/components/socialcard/DiscordcCard";
-import Pricing from "@/components/landing/Pricing";
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
 
 export default function LandingPage() {
   return (
-    <>
-     <script
+    <div
+      className={`${inter.variable} ${outfit.variable} demo-scope font-sans min-h-screen bg-surface text-text-primary`}
+    >
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -23,7 +40,7 @@ export default function LandingPage() {
             applicationCategory: "DeveloperApplication",
             operatingSystem: "Web",
             description:
-              "FlowLens shows you exactly what changed in your n8n, Zapier, or Make workflow and why it broke.",
+              "AI-powered version history and failure explanations for n8n, Zapier, and Make. Bring your own AI key. Your key. Your infrastructure. Your call.",
             offers: {
               "@type": "Offer",
               price: "0",
@@ -32,19 +49,20 @@ export default function LandingPage() {
           }),
         }}
       />
-      <Navbar />
-      <Hero />
-      <Problem/>
-      <Solution/>  
-      <BeforeAfter/>
-      <WhyFlowLens/>
-       <Pricing/>
-      <CallTA/>
-      
-      <DiscordFeedbackCard />
-      
-
-      <Footer />
-    </>
+      <Navbar pill />
+      <main>
+        <Hero />
+        <ProductMockup />
+        <ChangeChips />
+        <ValueStatement />
+        <Problem />
+        <HowItWorks />
+        <BringYourOwnKey />
+        <Integrations />
+        <FAQ />
+        <CallCTA />
+      </main>
+      <Footer  />
+    </div>
   );
 }

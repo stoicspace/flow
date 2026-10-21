@@ -104,7 +104,7 @@ export default function WorkflowIncidentsPage() {
         </h1>
       </div>
       <p className="text-sm text-text-muted mb-6">
-        AI-analyzed failures for this workflow — problem, root cause, and business impact at a glance.
+        AI-analyzed failures for this workflow: problem, root cause, and business impact at a glance.
       </p>
 
       {/* Status filter */}

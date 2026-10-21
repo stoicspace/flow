@@ -219,7 +219,7 @@ export default function AssistantChatPage() {
         <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
           {messages.length === 0 && (
             <div className="text-center text-text-muted text-xs mt-8">
-              Ask about this workflow — summary, review, deployment readiness, or debugging.
+              Ask about this workflow: summary, review, deployment readiness, or debugging.
             </div>
           )}
 
