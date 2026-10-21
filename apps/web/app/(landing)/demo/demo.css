@@ -1,0 +1,239 @@
+/*
+  FlowLens landing (/demo) styles — scoped to this page ONLY.
+  The double class (.demo-scope.demo-scope) raises specificity so these
+  values always win over :root and @theme — the rest of the app never sees them.
+
+  Light theme = .demo-scope (default)
+  Dark theme  = html.dark .demo-scope  (ThemeProvider toggles .dark on <html>)
+*/
+.demo-scope.demo-scope {
+  /* ——— Light theme (Figma "Landing — Light") ——— */
+  --color-surface: #ffffff;
+  --color-surface-2: #f7f4f2;
+  --color-surface-3: #fbf9f8;
+  --color-surface-4: #fff8f5;
+  --color-chip: #fbede7;
+
+  --color-text-primary: #0e0e10;
+  --color-text-secondary: #4a4a50;
+  --color-text-muted: #5f5f66;
+
+  --color-accent: #c8684a;
+  --color-accent-text: #a6492a;
+  --color-accent-soft: #e08a6b;
+  --color-accent-pale: #f2b49c;
+
+  --color-border: #efe7e3;
+  --color-border-strong: #e3d8d2;
+  --color-border-warm: #f1d5c9;
+
+  --color-success: #12b76a;
+  --color-success-bg: #eaf8f0;
+  --color-success-text: #067647;
+
+  --color-error: #d92d20;
+  --color-error-bg: #fef1f0;
+  --color-error-text: #b42318;
+
+  --color-warn-bg: #fff6e5;
+  --color-warn-text: #93370d;
+
+  --color-btn-primary-bg: #0e0e10;
+  --color-btn-primary-text: #ffffff;
+
+  /* Dark islands — stay dark in BOTH themes */
+  --color-island: #0e0e10;
+  --color-island-soft: #2a1810;
+  --color-island-border: #2b2724;
+  --color-island-text: #ffffff;
+  --color-island-muted: #cfcBC8;
+  --color-island-dim: #8e8a87;
+  --color-island-accent: #f2b49c;
+  --color-island-error: #fda29b;
+
+  /* Shadows (warm-brown based in light) */
+  --shadow-card: 0 2px 15px rgba(79, 29, 11, 0.07);
+  --shadow-card-hover: 0 6px 25px rgba(79, 29, 11, 0.12);
+  --shadow-float: 0 8px 25px rgba(79, 29, 11, 0.12);
+  --shadow-mockup: 0 12px 40px rgba(79, 29, 11, 0.14);
+  --shadow-btn: 0 2px 15px rgba(79, 29, 11, 0.1);
+
+  /* Fonts (set by next/font in the layout) */
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-outfit), var(--font-inter), system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Fira Code", monospace;
+}
+
+.dark .demo-scope {
+  /* ——— Dark theme (Figma "Dark Mode" landing) ——— */
+  --color-surface: #0b0a0a;
+  --color-surface-2: #131110;
+  --color-surface-3: #1a1716;
+  --color-surface-4: #18110e;
+  --color-chip: #2a1810;
+
+  --color-text-primary: #f5f2f0;
+  --color-text-secondary: #cfcBC8;
+  --color-text-muted: #8e8a87;
+
+  --color-accent: #c8684a;
+  --color-accent-text: #f0a386;
+  --color-accent-soft: #e08a6b;
+  --color-accent-pale: #f2b49c;
+
+  --color-border: #25201e;
+  --color-border-strong: #352e2b;
+  --color-border-warm: #4a2a1e;
+
+  --color-success: #5fd39a;
+  --color-success-bg: rgba(18, 183, 106, 0.12);
+  --color-success-text: #5fd39a;
+
+  --color-error: #d92d20;
+  --color-error-bg: rgba(217, 45, 32, 0.14);
+  --color-error-text: #fda29b;
+
+  --color-warn-bg: rgba(229, 169, 111, 0.12);
+  --color-warn-text: #e5a96f;
+
+  --color-btn-primary-bg: #f5f2f0;
+  --color-btn-primary-text: #0e0e10;
+
+  /* Shadows (black-based in dark) */
+  --shadow-card: 0 2px 15px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 6px 25px rgba(0, 0, 0, 0.55);
+  --shadow-float: 0 8px 25px rgba(0, 0, 0, 0.55);
+  --shadow-mockup: 0 12px 40px rgba(0, 0, 0, 0.6);
+  --shadow-btn: 0 2px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Headings use Outfit */
+.font-heading,
+.demo-scope h1,
+.demo-scope h2,
+.demo-scope h3 {
+  font-family: var(--font-heading);
+}
+
+/* Figma leading: headings ≈ 1.25 (76/96, 48/60, 64/81) */
+.demo-scope h1,
+.demo-scope h2,
+.demo-scope h3 {
+  line-height: 1.25;
+}
+
+/* Editorial headline tracking */
+.demo-scope h1,
+.demo-scope h2 {
+  letter-spacing: -0.02em;
+}
+
+/* Smooth anchored scrolling with room for the fixed nav */
+html:has(.demo-scope) {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+/* Shadow utilities */
+.shadow-card {
+  box-shadow: var(--shadow-card);
+}
+.shadow-float {
+  box-shadow: var(--shadow-float);
+}
+.shadow-mockup {
+  box-shadow: var(--shadow-mockup);
+}
+.shadow-btn {
+  box-shadow: var(--shadow-btn);
+}
+.group:hover .shadow-card-hover,
+.group:hover.shadow-card-hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Dotted workflow-canvas background */
+.fl-canvas-dots {
+  background-image: radial-gradient(
+    circle,
+    rgba(140, 130, 125, 0.35) 1px,
+    transparent 1px
+  );
+  background-size: 18px 18px;
+}
+
+/* Coral glows */
+.glow-hero {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(200, 104, 74, 0.5) 0%,
+    rgba(200, 104, 74, 0.18) 40%,
+    transparent 70%
+  );
+}
+.glow-soft {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(232, 140, 104, 0.4) 0%,
+    rgba(255, 190, 160, 0.16) 45%,
+    transparent 70%
+  );
+}
+.glow-strong {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(200, 104, 74, 0.6) 0%,
+    rgba(200, 104, 74, 0.22) 40%,
+    transparent 72%
+  );
+}
+
+/* Marquee */
+@keyframes fl-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.fl-marquee-track {
+  animation: fl-marquee 36s linear infinite;
+}
+
+/* Pulsing red detection dot */
+@keyframes fl-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.35);
+  }
+}
+.fl-pulse {
+  animation: fl-pulse 1.8s ease-in-out infinite;
+}
+
+/* Visible keyboard focus on everything interactive */
+.demo-scope a:focus-visible,
+.demo-scope button:focus-visible {
+  outline: 2px solid #c8684a;
+  outline-offset: 2px;
+}
+
+/* Users who prefer no motion get no motion */
+@media (prefers-reduced-motion: reduce) {
+  .demo-scope *,
+  .demo-scope *::before,
+  .demo-scope *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fl-marquee-track {
+    animation: none !important;
+  }
+}

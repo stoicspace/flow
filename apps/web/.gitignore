@@ -45,5 +45,3 @@ next-env.d.ts
 *.log
 
 # demo (local only)
-/app/(landing)/demo/
-/components/demo/
