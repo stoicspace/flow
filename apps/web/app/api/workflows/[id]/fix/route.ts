@@ -13,6 +13,7 @@ import { generateRepairFix } from "@/lib/services/ai";
 import { validateOperations, normalizeOperations } from "@flowlens/core";
 import { assertAiAllowed, getTeamAIProvider } from "@/lib/services/aiSettings";
 import { SupabaseStorageAdapter } from "@flowlens/storage-supabase";
+import { guardOverCap } from "@/lib/billing/entitlements";
 import type { RepairOperation, NormalisedWorkFlow } from "@flowlens/core";
 
 export async function GET(
@@ -42,6 +43,10 @@ export async function POST(
   if (ctx.error) return ctx.error;
   const { user, teamId, db } = ctx;
   const { id: workflowId } = await params;
+
+  // Over the workflow cap (downgrade) → read-only: no new fix attempts.
+  const overCap = await guardOverCap(db, teamId);
+  if (overCap) return overCap;
 
   const gate = await assertAiAllowed(db, teamId, "fix");
   if (!gate.allowed) {

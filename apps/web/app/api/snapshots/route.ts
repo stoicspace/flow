@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAuthContext } from "@/lib/supabase/auth-helper";
 import { SupabaseStorageAdapter } from "@flowlens/storage-supabase";
+import { loadEntitlements, historyCutoff } from "@/lib/billing/entitlements";
 
 export async function GET(request: Request) {
   const ctx = await getAuthContext();
@@ -17,7 +18,17 @@ export async function GET(request: Request) {
   try {
     const storage = new SupabaseStorageAdapter(db);
     const snapshots = await storage.listSnapshots(teamId, workflowId, 50);
-    return NextResponse.json({ snapshots });
+
+    // Plan limit: hide versions older than the retention window
+    // (10d free / 30d pro / 50d team / forever self-hosted).
+    // Hidden, never deleted — upgrading shows them again.
+    const ent = await loadEntitlements(db, teamId);
+    const cutoff = historyCutoff(ent);
+    const visible = cutoff
+      ? snapshots.filter((s) => s.created_at >= cutoff)
+      : snapshots;
+
+    return NextResponse.json({ snapshots: visible });
   } catch (e) {
     const message = e instanceof Error ? e.message : "Failed to list snapshots";
     return NextResponse.json({ error: message }, { status: 500 });

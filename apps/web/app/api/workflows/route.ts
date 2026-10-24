@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { getAuthContext } from "@/lib/supabase/auth-helper";
 import { SupabaseStorageAdapter } from "@flowlens/storage-supabase";
+import { guardWorkflowCap } from "@/lib/billing/entitlements";
 
 export async function GET() {
   const ctx = await getAuthContext();
@@ -31,6 +32,10 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
+
+  // Plan limit: block creating past the workflow cap (1 free / 10 pro / 20 team / ∞ self-hosted)
+  const cap = await guardWorkflowCap(db, teamId);
+  if (cap) return cap;
 
   try {
     const storage = new SupabaseStorageAdapter(db);

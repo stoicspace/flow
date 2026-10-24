@@ -48,3 +48,26 @@ export { encryptApiKey, decryptApiKey, maskApiKey } from "./ai/keyEncryption";
 // stored settings (self-hosted custom endpoint vs cloud fallback).
 export { resolveProvider } from "./ai/resolveProvider";
 export type { ResolvedProvider, ProviderSettings, CloudDefaults } from "./ai/resolveProvider";
+
+// Plans & entitlements — the single source of truth for what each
+// plan (free/pro/team/self_hosted) gets. Routes use getEntitlements
+// + canUse + getLimit to enforce limits; planLimitError builds the
+// standard 403 body the frontend turns into an upgrade prompt.
+export {
+  PLANS,
+  getEntitlements,
+  resolveEffectivePlan,
+  canUse,
+  getLimit,
+  requiredPlanFor,
+  planLimitError,
+} from "./plans";
+export type {
+  PlanId,
+  PlanStatus,
+  PlanAccount,
+  Entitlements,
+  FeatureName,
+  LimitName,
+  PlanLimitError,
+} from "./plans";

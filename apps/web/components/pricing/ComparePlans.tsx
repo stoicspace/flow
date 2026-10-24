@@ -7,7 +7,7 @@ const plans = ["Free", "Pro", "Team", "Self-hosted"];
 type Cell = string | "check" | "dash";
 
 const rows: { feature: string; values: Cell[] }[] = [
-  { feature: "Workflows", values: ["1", "10", "Unlimited", "Unlimited"] },
+  { feature: "Workflows", values: ["1", "10", "20", "Unlimited"] },
   {
     feature: "Version history",
     values: ["10 days", "30 days", "50 days", "Full"],
@@ -69,8 +69,8 @@ export default function ComparePlans() {
         </FadeUp>
 
         <FadeUp delay={0.1}>
-          <div className="mt-10 overflow-hidden rounded-2xl border border-border shadow-card">
-            <table className="w-full border-collapse text-left">
+          <div className="mt-10 overflow-x-auto rounded-2xl border border-border shadow-card">
+            <table className="w-full min-w-[680px] border-collapse text-left">
               <thead>
                 <tr className="bg-surface-2">
                   <th className="px-5 py-4 text-[14px] font-bold text-text-primary">

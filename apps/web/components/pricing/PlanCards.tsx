@@ -27,6 +27,7 @@ const plans: Plan[] = [
       "1 workflow",
       "Version history · 10 days",
       "Plain-language diffs",
+      "Proposed fixes",
       "Paste JSON import",
     ],
   },
@@ -50,8 +51,6 @@ const plans: Plan[] = [
       "Everything in Free",
       "10 workflows",
       "30 days history",
-      "Proposed fixes",
-      
     ],
     featured: true,
     badge: "Most popular",

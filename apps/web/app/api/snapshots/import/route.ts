@@ -4,11 +4,17 @@ import { normalise, detectPlatform } from "@flowlens/core";
 import { generateWorkflowSummary } from "@/lib/services/ai";
 import { assertAiAllowed, getTeamAIProvider } from "@/lib/services/aiSettings";
 import { SupabaseStorageAdapter } from "@flowlens/storage-supabase";
+import { guardOverCap } from "@/lib/billing/entitlements";
 
 export async function POST(request: Request) {
   const ctx = await getAuthContext();
   if (ctx.error) return ctx.error;
   const { user, teamId, db } = ctx;
+
+  // Over the workflow cap (downgrade) → read-only. Import itself is
+  // available on EVERY plan when within the cap.
+  const overCap = await guardOverCap(db, teamId);
+  if (overCap) return overCap;
 
   const { workflow_id, platform: explicitPlatform, raw_json, label } =
     await request.json();

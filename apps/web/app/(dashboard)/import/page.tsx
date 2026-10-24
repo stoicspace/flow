@@ -12,6 +12,26 @@ import DirectConnections from "@/components/import/DirectConnections";
 import TrustBadges from "@/components/import/TrustBadges";
 import PasteJsonModal from "@/components/import/PasteJsonModal";
 
+// Human wording for a 403 PLAN_LIMIT response from any API route.
+export function planLimitMessage(body: {
+  feature?: string;
+  requiredPlan?: string;
+  currentPlan?: string;
+}): string {
+  const plan =
+    body.requiredPlan === "self_hosted"
+      ? "Self-hosted"
+      : body.requiredPlan === "team"
+        ? "Team"
+        : body.requiredPlan === "pro"
+          ? "Pro"
+          : "Free";
+  if (body.feature === "max_workflows") {
+    return `You've reached your plan's workflow limit. Upgrade to the ${plan} plan to add more.`;
+  }
+  return `This needs the ${plan} plan. Upgrade to unlock it.`;
+}
+
 export default function ImportPage() {
   const router = useRouter();
   const [status, setStatus] = useState<"idle" | "processing" | "done" | "error">("idle");
@@ -29,6 +49,8 @@ export default function ImportPage() {
         body: JSON.stringify({ name: suggestedName, platform: "n8n" }),
       }).then(r => r.json());
 
+      // 403 PLAN_LIMIT — plan's workflow cap reached (or over-cap read-only).
+      if (wfRes.code === "PLAN_LIMIT") throw new Error(planLimitMessage(wfRes));
       if (wfRes.error) throw new Error(wfRes.error);
 
       // 2. Import snapshot (auto-detects platform)
@@ -38,6 +60,7 @@ export default function ImportPage() {
         body: JSON.stringify({ workflow_id: wfRes.workflow.id, raw_json }),
       }).then(r => r.json());
 
+      if (snapRes.code === "PLAN_LIMIT") throw new Error(planLimitMessage(snapRes));
       if (snapRes.error) throw new Error(snapRes.error);
 
       setStatus("done");

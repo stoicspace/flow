@@ -32,7 +32,11 @@ export async function middleware(request: NextRequest) {
     publicPaths.includes(path) || path === "/docs" || path.startsWith("/docs/");
   const isAuthPage = path === "/login" || path === "/signup";
 
-  if (!user && !isPublicPath) {
+  // /admin has its OWN username/password gate (see lib/billing/admin.ts),
+  // so it doesn't require a regular FlowLens session.
+  const isAdminPath = path === "/admin" || path.startsWith("/admin/");
+
+  if (!user && !isPublicPath && !isAdminPath) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
   if (user && isAuthPage) {

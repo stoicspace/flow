@@ -4,6 +4,8 @@
 import { useEffect, useState, useCallback } from "react";
 import ConnectionCard from "@/components/connections/ConnectionCard";
 import ConnectionModal from "@/components/connections/ConnectionModal";
+import { useEntitlements } from "@/lib/useEntitlements";
+import { PlanBanner } from "@/components/plans/PlanGate";
 
 interface ConnectionRow {
   id: string;
@@ -26,6 +28,9 @@ export default function ConnectionsPage() {
   const [open, setOpen] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [syncMessage, setSyncMessage] = useState("");
+  const { data: entData } = useEntitlements();
+  // Direct connect + auto sync = Team and Self-hosted plans only.
+  const locked = entData ? !entData.entitlements.canDirectConnect : false;
 
   const loadConnections = useCallback(async () => {
     setLoading(true);
@@ -50,7 +55,13 @@ export default function ConnectionsPage() {
     try {
       const res = await fetch("/api/connections/sync", { method: "POST" });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Sync failed");
+      if (!res.ok) {
+        // Server returns { code: "PLAN_LIMIT", requiredPlan } when blocked.
+        if (json.code === "PLAN_LIMIT") {
+          throw new Error("Auto sync requires the Team plan. Upgrade to enable it.");
+        }
+        throw new Error(json.error || "Sync failed");
+      }
       setSyncMessage(
         `Synced: ${json.workflowsImported} workflows, ${json.executionsProcessed} executions, ${json.incidentsCreated} new incidents.`
       );
@@ -71,12 +82,17 @@ export default function ConnectionsPage() {
 
         <button
           onClick={handleSync}
-          disabled={syncing || connections.length === 0}
+          disabled={syncing || connections.length === 0 || locked}
+          title={locked ? "Requires the Team plan" : undefined}
           className="rounded-lg border border-border bg-surface-2 px-4 py-2 text-sm text-text-primary hover:border-brand-orange/40 disabled:opacity-50 transition"
         >
           {syncing ? "Syncing..." : "Sync now"}
         </button>
       </div>
+
+      {locked && (
+        <PlanBanner message="Direct connect + auto sync requires the Team plan. Features below stay visible but connecting is locked until you upgrade." />
+      )}
 
       {syncMessage && (
         <p className="mb-6 text-sm text-text-muted">{syncMessage}</p>
@@ -99,7 +115,9 @@ export default function ConnectionsPage() {
               lastSync={row?.lastSync ?? undefined}
               errorMsg={row?.errorMsg ?? undefined}
               loading={loading}
+              locked={locked}
               onConnect={() => {
+                if (locked) return;
                 setSelectedPlatform(platform);
                 setOpen(true);
               }}

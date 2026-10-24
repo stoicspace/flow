@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { User, Shield, Key, GitBranch, LogOut, Edit2, Copy, Check, Sparkles } from "lucide-react";
+import { useEntitlements } from "@/lib/useEntitlements";
+import { RequiresPlan } from "@/components/plans/PlanGate";
 
 type SettingsTab = "General" | "AI & Privacy" | "Security" | "API Keys" | "Integrations";
 
@@ -48,6 +50,9 @@ export default function SettingsPage() {
   const [providerSaved, setProviderSaved] = useState(false);
   const router = useRouter();
   const supabase = createClient();
+  // Plan gate: bring-your-own AI key / custom endpoint = Self-hosted plan only.
+  const { data: entData } = useEntitlements();
+  const byokLocked = entData ? !entData.entitlements.canUseCustomAiKey : false;
 
  useEffect(() => {
   async function load() {
@@ -429,6 +434,18 @@ export default function SettingsPage() {
               {aiSettings.processing_location === "self_hosted" && (
                 <div className="border-t border-border pt-5">
                   <label className="text-sm font-medium text-text-primary mb-1.5 block">Custom Endpoint</label>
+
+                  {byokLocked ? (
+                    <div className="rounded-lg border border-border bg-surface p-4">
+                      <p className="text-xs text-text-muted mb-3">
+                        Pointing FlowLens at your own AI key or self-hosted model
+                        endpoint is a Self-hosted plan feature. Your plan uses the
+                        default FlowLens AI provider instead.
+                      </p>
+                      <RequiresPlan planName="Self-hosted" />
+                    </div>
+                  ) : (
+                    <>
                   <p className="text-xs text-text-muted mb-3">
                     Paste in the endpoint, shape, and model for your provider. See the{" "}
                     <a href="/docs/ai-endpoints" className="text-brand-orange hover:underline">
@@ -508,8 +525,10 @@ export default function SettingsPage() {
                     >
                       {providerSaving ? "Testing connection..." : providerSaved ? "Saved ✓" : "Test & Save"}
                     </button>
+                      </div>
+                    </>
+                  )}
                   </div>
-                </div>
               )}
             </div>
           )}

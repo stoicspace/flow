@@ -7,12 +7,18 @@ import { testN8nConnection, getN8nWorkflows } from "@/lib/connections/n8n";
 import { testMakeConnection, getMakeScenarios } from "@/lib/connections/make";
 import { generateWebhookSecret, buildZapierWebhookUrl } from "@/lib/connections/zapier";
 import { encrypt } from "@/lib/services/crypto";
+import { guardFeature, guardWorkflowCap } from "@/lib/billing/entitlements";
 
 export async function POST(request: Request) {
   try {
     const ctx = await getAuthContext();
     if (ctx.error) return ctx.error;
     const { db, user } = ctx;
+
+    // Direct connect + auto sync = Team and Self-hosted plans only.
+    const gate = await guardFeature(db, ctx.teamId, "direct_connect");
+    if (gate) return gate;
+
 
     const { platform, name, baseUrl, apiKey, makeTeamId } = await request.json();
 
@@ -73,6 +79,10 @@ export async function POST(request: Request) {
     if (platform === "n8n") {
       const workflows = await getN8nWorkflows(baseUrl, apiKey);
 
+      // Don't import past the plan's workflow cap.
+      const cap = await guardWorkflowCap(db, profile.team_id, workflows.length);
+      if (cap) return cap;
+
       const rows = workflows.map((workflow) => ({
         team_id: profile.team_id,
         external_id: workflow.id,
@@ -86,6 +96,10 @@ export async function POST(request: Request) {
       }
     } else if (platform === "make") {
       const scenarios = await getMakeScenarios(baseUrl, apiKey, makeTeamId);
+
+      // Don't import past the plan's workflow cap.
+      const cap = await guardWorkflowCap(db, profile.team_id, scenarios.length);
+      if (cap) return cap;
 
       const rows = scenarios.map((s) => ({
         team_id: profile.team_id,

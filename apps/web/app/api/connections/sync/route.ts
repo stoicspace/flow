@@ -14,11 +14,17 @@ import {
   normalizeMakeStatus,
 } from "@/lib/connections/make";
 import { decrypt } from "@/lib/services/crypto";
+import { guardFeature } from "@/lib/billing/entitlements";
 
 export async function POST() {
   const ctx = await getAuthContext();
   if (ctx.error) return ctx.error;
   const { db, teamId } = ctx;
+
+  // Direct connect + auto sync = Team and Self-hosted plans only.
+  // This is also what "stops auto sync" when an account downgrades.
+  const gate = await guardFeature(db, teamId, "direct_connect");
+  if (gate) return gate;
 
   const { data: integrations, error } = await db
     .from("flowlens_platforms")

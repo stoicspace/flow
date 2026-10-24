@@ -5,7 +5,9 @@ import SystemHealthCard from "@/components/ui/system-health-card/page";
 import RecentActivityFeed from "@/components/ui/recent-activity-feed/page";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { History, CheckCircle, AlertTriangle } from "lucide-react";
+import { History, CheckCircle, AlertTriangle, Lock } from "lucide-react";
+import { useEntitlements } from "@/lib/useEntitlements";
+import { PlanBanner } from "@/components/plans/PlanGate";
 const statusPriority: Record<string, number> = {
   failing: 0,
   degraded: 1,
@@ -16,6 +18,7 @@ export default function AllWorkflows() {
   const [workflows, setWorkflows] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [incidents, setIncidents] = useState<any[]>([]);
+  const { data: entData } = useEntitlements();
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning." : hour < 18 ? "Good afternoon." : "Good evening.";
 
@@ -46,6 +49,12 @@ export default function AllWorkflows() {
       wf.status === "degraded"
   ).length;
 
+  // Plan limits (null max = unlimited plan, e.g. self-hosted).
+  const maxWorkflows = entData?.entitlements.maxWorkflows ?? null;
+  const usedWorkflows = entData?.usage.workflows ?? workflows.length;
+  const atCap = maxWorkflows != null && usedWorkflows >= maxWorkflows;
+  const overCap = maxWorkflows != null && usedWorkflows > maxWorkflows;
+
   return (
     <div className="flex min-h-screen bg-surface  ">
 
@@ -57,6 +66,11 @@ export default function AllWorkflows() {
             <p className="text-text-muted text-sm px-5">Loading workflows...</p>
           ) : (
             <div>
+              {overCap && (
+                <PlanBanner
+                  message={`Your plan allows ${maxWorkflows} workflow${maxWorkflows === 1 ? "" : "s"} and you have ${usedWorkflows}. This workspace is read-only until you delete workflows or upgrade your plan.`}
+                />
+              )}
               <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-text-primary">Workflows</h1>
@@ -64,13 +78,15 @@ export default function AllWorkflows() {
             {loading ? "Loading..." : `${workflows.length} workflow${workflows.length === 1 ? "" : "s"} · ${
               workflows.filter(w => w.latest_ai_summary || w.latest_ai_review).length
             } reviewed by AI`}
+            {maxWorkflows != null && ` · ${usedWorkflows} of ${maxWorkflows} on your plan`}
           </p>
         </div>
         <Link
-          href="/import"
-          className="text-sm bg-brand-orange text-text-primary font-medium rounded-lg px-4 py-2 hover:opacity-90 transition-opacity"
+          href={atCap ? "/pricing" : "/import"}
+          className="text-sm bg-brand-orange text-text-primary font-medium rounded-lg px-4 py-2 hover:opacity-90 transition-opacity inline-flex items-center gap-1.5"
         >
-          Import New
+          {atCap && <Lock size={14} />}
+          {atCap ? "Limit reached · Upgrade" : "Import New"}
         </Link>
       </div>
             <div className="grid grid-cols-2 ">
@@ -144,7 +160,7 @@ export default function AllWorkflows() {
 
               <Card
                 variant="create"
-                href="/import"
+                href={atCap ? "/pricing" : "/import"}
               />
             </div>
           </div>

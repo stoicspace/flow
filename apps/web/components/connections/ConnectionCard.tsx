@@ -1,7 +1,7 @@
 // components/connections/ConnectionCard.tsx
 "use client";
 
-import { CheckCircle2, AlertCircle, PlugZap, Loader2 } from "lucide-react";
+import { CheckCircle2, AlertCircle, PlugZap, Loader2, Lock } from "lucide-react";
 
 interface Props {
   platform: string;
@@ -12,6 +12,9 @@ interface Props {
   errorMsg?: string;
   loading?: boolean;
   onConnect: () => void;
+  // Plan gate: feature stays VISIBLE but its button becomes an
+  // upgrade link instead of the connect action.
+  locked?: boolean;
 }
 
 export default function ConnectionCard({
@@ -23,6 +26,7 @@ export default function ConnectionCard({
   errorMsg,
   loading,
   onConnect,
+  locked,
 }: Props) {
   const hasError = status === "error";
 
@@ -68,13 +72,23 @@ export default function ConnectionCard({
         <p className="text-xs text-status-error mt-5">{errorMsg}</p>
       )}
 
-      <button
-        onClick={onConnect}
-        className="mt-6 flex items-center gap-2 rounded-lg bg-brand-orange px-4 py-2 text-sm text-white hover:opacity-90"
-      >
-        <PlugZap size={15} />
-        {connected ? "Manage" : hasError ? "Reconnect" : "Connect"}
-      </button>
+      {locked ? (
+        <a
+          href="/pricing"
+          className="mt-6 inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2 text-sm text-text-secondary hover:border-brand-orange/50 transition"
+        >
+          <Lock size={15} />
+          Requires Team plan · Upgrade
+        </a>
+      ) : (
+        <button
+          onClick={onConnect}
+          className="mt-6 flex items-center gap-2 rounded-lg bg-brand-orange px-4 py-2 text-sm text-white hover:opacity-90"
+        >
+          <PlugZap size={15} />
+          {connected ? "Manage" : hasError ? "Reconnect" : "Connect"}
+        </button>
+      )}
     </div>
   );
 }

@@ -10,6 +10,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/service"; // your service-role client, not the cookie-based one
 import { ZapierWebhookPayload } from "@/lib/connections/zapier";
+import { loadEntitlements } from "@/lib/billing/entitlements";
 
 export async function POST(
   request: NextRequest,
@@ -43,6 +44,26 @@ export async function POST(
       { error: "Missing zap_id, status, or ran_at" },
       { status: 400 }
     );
+  }
+
+  // Plan cap: a NEW zap past the workflow cap is accepted but ignored
+  // (Zapier shouldn't retry). Already-registered zaps keep updating
+  // normally — snapshots for existing workflows are never blocked.
+  const { data: knownWorkflow } = await db
+    .from("flowlens_workflows")
+    .select("id")
+    .eq("external_id", payload.zap_id)
+    .maybeSingle();
+
+  if (!knownWorkflow) {
+    const { count } = await db
+      .from("flowlens_workflows")
+      .select("id", { count: "exact", head: true })
+      .eq("team_id", teamId);
+    const ent = await loadEntitlements(db, teamId);
+    if ((count ?? 0) >= ent.maxWorkflows) {
+      return NextResponse.json({ ok: true, ignored: "plan_limit" });
+    }
   }
 
   const { data: workflow } = await db

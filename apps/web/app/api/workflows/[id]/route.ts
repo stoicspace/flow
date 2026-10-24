@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAuthContext } from "@/lib/supabase/auth-helper";
 import { SupabaseStorageAdapter } from "@flowlens/storage-supabase";
+import { guardOverCap } from "@/lib/billing/entitlements";
 
 export async function GET(
   _req: Request,
@@ -26,6 +27,12 @@ export async function PATCH(
   const ctx = await getAuthContext();
   if (ctx.error) return ctx.error;
   const { teamId, db } = ctx;
+
+  // Downgrade safety: over the cap → read-only until back under.
+  // (DELETE is intentionally NOT blocked — removing workflows is
+  // how an over-limit account gets back under the cap.)
+  const overCap = await guardOverCap(db, teamId);
+  if (overCap) return overCap;
 
   const body = await request.json();
   const allowed = ["name", "status", "external_id"] as const;

@@ -10,6 +10,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getAuthContext } from "@/lib/supabase/auth-helper";
 import { applyOperations, testRepair } from "@flowlens/core";
 import { SupabaseStorageAdapter } from "@flowlens/storage-supabase";
+import { guardOverCap } from "@/lib/billing/entitlements";
 import type { NormalisedWorkFlow, RepairOperation } from "@flowlens/core";
 
 export async function POST(
@@ -20,6 +21,10 @@ export async function POST(
   if (ctx.error) return ctx.error;
   const { user, teamId, db } = ctx;
   const { id: workflowId, attemptId } = await params;
+
+  // Over the workflow cap (downgrade) → read-only: fixes can't apply.
+  const overCap = await guardOverCap(db, teamId);
+  if (overCap) return overCap;
 
   const storage = new SupabaseStorageAdapter(db);
   const attempt = await storage.getFixAttempt(teamId, workflowId, attemptId);

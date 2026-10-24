@@ -10,6 +10,7 @@ import { AISettings, DEFAULT_AI_SETTINGS, getAiSettings } from "@/lib/services/a
 import { maskApiKey } from "@/lib/ai/keyEncryption";
 import { createProvider } from "@/lib/ai/provider";
 import { SupabaseKeyStore } from "@/lib/keystore/supabaseKeyStore";
+import { loadEntitlements, planLimitError } from "@/lib/billing/entitlements";
 
 export type { AISettings };
 
@@ -60,6 +61,17 @@ export async function PATCH(request: Request) {
 
   const updates: Partial<AISettings> = {};
   allowed.forEach(k => { if (k in body) (updates as Record<string, unknown>)[k] = body[k]; });
+
+  // Plan limit: bring-your-own AI key / custom endpoint = Self-hosted
+  // plan only. Other settings (privacy toggles etc.) stay writable.
+  const byokFields = ["ai_provider_endpoint", "ai_provider_shape", "ai_provider_model", "ai_provider_api_key"];
+  const touchedByok = byokFields.some((f) => f in body);
+  if (touchedByok) {
+    const ent = await loadEntitlements(db, teamId);
+    if (!ent.canUseCustomAiKey) {
+      return NextResponse.json(planLimitError(ent, "custom_ai_key"), { status: 403 });
+    }
+  }
 
   try {
     // Compute the merged settings in memory first — nothing gets written
