@@ -54,7 +54,7 @@ export default function AIExplanationCard({
             <button
               onClick={onApplyFix}
               disabled={applying}
-              className="text-xs font-medium bg-brand-orange text-text-primary rounded px-3 py-1.5 whitespace-nowrap disabled:opacity-60 hover:opacity-90 transition-opacity"
+              className="text-xs font-medium bg-brand-orange text-white rounded px-3 py-1.5 whitespace-nowrap disabled:opacity-60 hover:opacity-90 transition-opacity"
             >
               {applying ? "Applying..." : "Apply Fix"}
             </button>

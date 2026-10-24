@@ -24,10 +24,9 @@ const plans: Plan[] = [
     ),
     cta: { label: "Start free", href: "/signup", variant: "outline" },
     features: [
-      "[N] workflows",
-      "Version history · [N] days",
+      "1 workflow",
+      "Version history · 10 days",
       "Plain-language diffs",
-      "Bring your own AI key",
       "Paste JSON import",
     ],
   },
@@ -36,7 +35,7 @@ const plans: Plan[] = [
     tagline: "For anyone running workflows that matter.",
     price: (
       <span className="font-heading text-[40px] font-bold leading-none text-island-text">
-        [$]{" "}
+        $30
         <span className="text-[14px] font-medium text-island-dim">
           per month
         </span>
@@ -49,10 +48,10 @@ const plans: Plan[] = [
     },
     features: [
       "Everything in Free",
-      "[N] workflows",
-      "Full version history",
+      "10 workflows",
+      "30 days history",
       "Proposed fixes",
-      "Direct connect + auto sync",
+      
     ],
     featured: true,
     badge: "Most popular",
@@ -62,7 +61,7 @@ const plans: Plan[] = [
     tagline: "For teams sharing automations.",
     price: (
       <span className="font-heading text-[40px] font-bold leading-none text-text-primary">
-        [$]{" "}
+        $100
         <span className="text-[14px] font-medium text-text-muted">
           per month
         </span>
@@ -71,10 +70,10 @@ const plans: Plan[] = [
     cta: { label: "Start free trial", href: "/signup", variant: "primary" },
     features: [
       "Everything in Pro",
-      "[N] seats",
-      "Unlimited workflows",
-      "[TEAM FEATURE]",
-      "[TEAM FEATURE]",
+      "3 seats",
+      "20 workflows",
+      "Workflow-based access control",
+      "Unlimited history diffs",
     ],
   },
   {
@@ -90,7 +89,7 @@ const plans: Plan[] = [
       "Runs on your infrastructure",
       "Point at a self-hosted model",
       "Works with self-hosted n8n",
-      "[SUPPORT TERMS]",
+      "Direct connect + auto sync",
     ],
   },
 ];
@@ -100,7 +99,7 @@ const ctaClasses: Record<Plan["cta"]["variant"], string> = {
     "border border-border-strong bg-surface text-text-primary hover:border-accent/50",
   primary:
     "bg-btn-primary-bg text-btn-primary-text hover:opacity-90 shadow-btn",
-  coral: "bg-accent-soft text-island hover:opacity-90",
+  coral: "bg-accent-soft text-white hover:opacity-90",
 };
 
 export default function PlanCards() {
@@ -142,7 +141,7 @@ export default function PlanCards() {
                     </p>
                   </div>
                   {plan.badge && (
-                    <span className="shrink-0 rounded-full bg-accent-soft px-3 py-1 text-[11px] font-semibold text-island">
+                    <span className="shrink-0 rounded-full bg-accent-soft px-3 py-1 text-[11px] font-semibold text-white">
                       {plan.badge}
                     </span>
                   )}

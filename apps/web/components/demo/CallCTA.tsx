@@ -31,7 +31,7 @@ export default function CallCTA() {
               <div className="mt-7 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <a
                   href="/signup"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent-soft px-8 py-4 text-[15px] font-semibold text-island transition-opacity duration-200 hover:opacity-90 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent-soft px-8 py-4 text-[15px] font-semibold text-white transition-opacity duration-200 hover:opacity-90 sm:w-auto"
                 >
                   Start free, no credit card
                   <ArrowUpRight size={16} />

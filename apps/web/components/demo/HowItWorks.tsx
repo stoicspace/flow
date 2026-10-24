@@ -188,7 +188,7 @@ export default function HowItWorks() {
                   <button className="rounded-lg border border-border-strong bg-surface px-4 py-2 text-[12px] font-semibold text-text-primary transition-colors hover:border-accent/50">
                     Review diff
                   </button>
-                  <button className="rounded-lg bg-accent-soft px-4 py-2 text-[12px] font-semibold text-island transition-opacity hover:opacity-90">
+                  <button className="rounded-lg bg-accent-soft px-4 py-2 text-[12px] font-semibold text-white transition-opacity hover:opacity-90">
                     Apply
                   </button>
                 </div>

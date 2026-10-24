@@ -120,7 +120,7 @@ export default function ContactForm() {
         </button>
 
         <p className="mt-4 text-center text-[13px] text-text-muted">
-          A person reads every message. Typical reply: [RESPONSE TIME].
+          A person reads every message. Typical reply: 1-2 business days.
         </p>
       </div>
     </form>

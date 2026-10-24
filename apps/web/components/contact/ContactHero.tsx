@@ -24,10 +24,9 @@ export default function ContactHero() {
             <Mail size={17} />
           </span>
           <span>
-            <span className="block text-[12.5px] text-text-muted">Email</span>
-            <span className="mt-0.5 block text-[15px] font-bold text-text-primary">
-              [CONTACT EMAIL]
-            </span>
+            <a href="mailto:spacestoic7@gmail.com" className="text-[15px] font-bold text-text-primary underline">
+              <span className="sr-only">Email </span>
+            </a>
           </span>
         </div>
 

@@ -7,19 +7,19 @@ const plans = ["Free", "Pro", "Team", "Self-hosted"];
 type Cell = string | "check" | "dash";
 
 const rows: { feature: string; values: Cell[] }[] = [
-  { feature: "Workflows", values: ["[N]", "[N]", "Unlimited", "Unlimited"] },
+  { feature: "Workflows", values: ["1", "10", "Unlimited", "Unlimited"] },
   {
     feature: "Version history",
-    values: ["[N] days", "Full", "Full", "Full"],
+    values: ["10 days", "30 days", "50 days", "Full"],
   },
   {
     feature: "Plain-language diffs",
     values: ["check", "check", "check", "check"],
   },
-  { feature: "Proposed fixes", values: ["dash", "check", "check", "check"] },
+  { feature: "Proposed fixes", values: ["check", "check", "check", "check"] },
   {
     feature: "Bring your own AI key",
-    values: ["check", "check", "check", "check"],
+    values: ["dash", "dash", "dash", "check"],
   },
   {
     feature: "Paste JSON import",
@@ -27,9 +27,9 @@ const rows: { feature: string; values: Cell[] }[] = [
   },
   {
     feature: "Direct connect + auto sync",
-    values: ["dash", "check", "check", "check"],
+    values: ["dash", "dash", "check", "check"],
   },
-  { feature: "Seats", values: ["1", "1", "[N]", "[N]"] },
+  { feature: "Seats", values: ["1", "1", "3", "Unlimited"] },
 ];
 
 function CellValue({ cell, featured }: { cell: Cell; featured: boolean }) {
@@ -79,11 +79,7 @@ export default function ComparePlans() {
                   {plans.map((p, i) => (
                     <th
                       key={p}
-                      className={`px-5 py-4 text-center text-[14px] font-bold ${
-                        i === 1
-                          ? "bg-surface-4 text-accent-text"
-                          : "text-text-primary"
-                      }`}
+                      className={`px-5 py-4 text-center text-[14px] font-bold `}
                     >
                       {p}
                     </th>

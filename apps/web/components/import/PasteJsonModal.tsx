@@ -37,7 +37,7 @@ export default function PasteJsonModal({ open, onClose, onSubmit }: Props) {
           <button
             onClick={() => { onSubmit(value); setValue(""); }}
             disabled={!value.trim()}
-            className="bg-brand-orange text-text-primary text-sm font-medium rounded-lg px-4 py-2 disabled:opacity-50 hover:opacity-90 transition-opacity"
+            className="bg-brand-orange text-white text-sm font-medium rounded-lg px-4 py-2 disabled:opacity-50 hover:opacity-90 transition-opacity"
           >
             Import
           </button>

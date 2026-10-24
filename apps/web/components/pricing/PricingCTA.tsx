@@ -18,7 +18,7 @@ export default function PricingCTA() {
               <div className="mt-8">
                 <Link
                   href="/signup"
-                  className="inline-flex items-center rounded-full bg-accent-soft px-7 py-3 text-[15px] font-semibold text-island transition-opacity duration-200 hover:opacity-90"
+                  className="inline-flex items-center rounded-full bg-accent-soft px-7 py-3 text-[15px] font-semibold text-white transition-opacity duration-200 hover:opacity-90"
                 >
                   Start free, no credit card
                 </Link>
